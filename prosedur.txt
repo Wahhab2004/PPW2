@@ -1,0 +1,5 @@
+1. Duplikat file '.env.example' lalu ubah namanya menjadi '.env'.
+2. Atur konfigurasi koneksi database di file '.env'.
+3. Jalankan 'php artisan key:generate'.
+4. Jalankan 'php artisan migrate'.
+5. Jalankan 'php artisan db:seed'.
