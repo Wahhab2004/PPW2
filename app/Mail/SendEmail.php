@@ -29,7 +29,11 @@ class SendEmail extends Mailable
     {
         // digunakan untuk mengatur struktur email yang lebih spesifik seperti melakukan konfigurasi pengirim email,
         // menampilkan template email dan menambahkan attachment.
-        return $this->subject($this->data['subject'])->view('emails.formEmail');
+        if ($this->data['subject'] == 'Registration Successful') {
+            return $this->subject($this->data['subject'])->view('emails.registerEmail');
+        } else {
+            return $this->subject($this->data['subject'])->view('emails.formEmail');
+        }
     }
 
     /**
