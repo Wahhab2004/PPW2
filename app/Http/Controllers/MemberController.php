@@ -30,7 +30,7 @@ class MemberController extends Controller
      */
     public function store(Request $request)
     {
-        // Validasi input termasuk birth_date
+        // Validasi input
         $validatedData = $request->validate([
             'full_name' => 'required|string|max:255',
             'phone_number' => 'required|string|max:15|unique:members,phone_number',

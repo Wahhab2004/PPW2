@@ -38,8 +38,7 @@
 
         <div class="mb-3">
             <label for="address" class="form-label">Address</label>
-            <input type="text" class="form-control" id="address" name="address"
-                value="{{ old('address', $anggota->address) }}" required>
+            <textarea type="text" class="form-control" id="address" name="address" rows="3" required>{{ old('address', $anggota->address) }}</textarea>
             @error('address')
                 <small class="text-danger">{{ $message }}</small>
             @enderror

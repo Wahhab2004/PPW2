@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-light">
     <div class="container">
-        <a class="navbar-brand" href="{{ URL('/') }}">Custom Login Register</a>
+        <a class="navbar-brand" href="{{ URL('/') }}">Laravel 11</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -15,6 +15,10 @@
                     <li class="nav-item">
                         <a class="nav-link {{ request()->is('register') ? 'active' : '' }}"
                             href="{{ route('register') }}">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->is('send-email') ? 'active' : '' }}"
+                            href="{{ route('send.email') }}">Send Email</a>
                     </li>
                 @else
                     <li class="nav-item dropdown">
