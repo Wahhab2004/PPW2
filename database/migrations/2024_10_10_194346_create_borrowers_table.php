@@ -16,9 +16,9 @@ return new class extends Migration
             $table->foreignId('member_id');
             $table->foreignId('book_id');
             $table->dateTime('loan_date');
-            $table->dateTime('return_date');
+            $table->dateTime('return_date')->nullable();
             $table->dateTime('due_date');
-            $table->integer('fine');
+            $table->integer('fine')->nullable();
             $table->timestamps();
         });
     }

@@ -4,6 +4,10 @@
 
 @section('content')
     <h2 class="text-center mb-4">Member List</h2>
+    <form action="{{ route('members.search') }}" method="GET">
+        @csrf
+        <input type="text" name="search" class="form-control mb-2" placeholder="Search Member">
+    </form>
     <a href="{{ route('members.create') }}" class="btn btn-primary float-end mb-2">Add Member</a>
     <table class="table table-striped table-hover table-bordered">
         <thead class="table-dark">
@@ -43,4 +47,10 @@
             @endforeach
         </tbody>
     </table>
+    <!-- Menampilkan jumlah anggota -->
+    <div class="row mt-3">
+        <div class="col-md-6">
+            <p><strong>Total Members:</strong> {{ $jumlah_anggota }}</p>
+        </div>
+    </div>
 @endsection

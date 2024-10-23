@@ -25,7 +25,7 @@ class BookController extends Controller
 
     public function search(Request $request)
     {
-        $batas = 20;
+        $batas = 2000;
         $search = $request->input('search');
         // Mengambil data buku dengan paginasi
         $data_buku = Book::where('title', 'like', '%' . $search . '%')->orwhere('writer', 'like', '%' . request('search') . '%')->paginate($batas);

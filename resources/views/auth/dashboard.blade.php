@@ -13,6 +13,7 @@
                     <a class="btn btn-primary d-block mt-5" href="{{ route('publishers.index') }}">Publisher List</a>
                     <a class="btn btn-primary d-block mt-3" href="{{ route('books.index') }}">Book List</a>
                     <a class="btn btn-primary d-block mt-3" href="{{ route('members.index') }}">Member List</a>
+                    <a class="btn btn-primary d-block mt-3" href="{{ route('borrowers.index') }}">Borrower List</a>
                 </div>
             </div>
         </div>

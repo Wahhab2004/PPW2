@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PublisherController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\BorrowerController;
 use App\Http\Controllers\Auth\LoginRegisterController;
 use App\Http\Controllers\SendEmailController;
 
@@ -23,6 +24,7 @@ Route::controller(LoginRegisterController::class)->middleware('guest')->group(fu
 });
 
 // Dibuat dengan php artisan make:middleware CustomAuthRedirect
+// Alasan memakai middleware custom karena page login tidak menerima session message di percobaan saya
 // Middleware CustomAuthRedirect memastikan bahwa 'HANYA PENGGUNA YANG SUDAH LOGIN' yang dapat mengakses rute atau aksi tertentu.
 Route::middleware([CustomAuthRedirect::class])->group(function () {
     Route::get('/dashboard', [LoginRegisterController::class, 'dashboard'])->name('dashboard');
@@ -49,6 +51,15 @@ Route::middleware([CustomAuthRedirect::class])->group(function () {
     Route::get('/members/edit/{id}', [MemberController::class, 'edit'])->name('members.edit');
     Route::put('/members/{id}', [MemberController::class, 'update'])->name('members.update');
     Route::delete('/members/{id}', [MemberController::class, 'destroy'])->name('members.destroy');
+    Route::get('/members/search', [MemberController::class, 'search'])->name('members.search');
+
+    Route::get('/borrowers', [BorrowerController::class, 'index'])->name('borrowers.index');
+    Route::get('/borrowers/create', [BorrowerController::class, 'create'])->name('borrowers.create');
+    Route::post('/borrowers', [BorrowerController::class, 'store'])->name('borrowers.store');
+    Route::get('/borrowers/edit/{id}', [BorrowerController::class, 'edit'])->name('borrowers.edit');
+    Route::put('/borrowers/{id}', [BorrowerController::class, 'update'])->name('borrowers.update');
+    Route::delete('/borrowers/{id}', [BorrowerController::class, 'destroy'])->name('borrowers.destroy');
+    Route::get('/borrowers/search', [BorrowerController::class, 'search'])->name('borrowers.search');
 });
 
 Route::get('/send-email', [SendEmailController::class, 'index'])->name('send.email');

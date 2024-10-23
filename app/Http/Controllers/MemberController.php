@@ -13,8 +13,18 @@ class MemberController extends Controller
     public function index()
     {
         $data_anggota = Member::all();
+        $jumlah_anggota = Member::count(); // Menghitung jumlah total anggota di database
 
-        return view('members.index', compact('data_anggota'));
+        return view('members.index', compact('data_anggota', 'jumlah_anggota'));
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+        $data_anggota = Member::where('full_name', 'like', '%' . $search . '%')->orwhere('email', 'like', '%' . request('search') . '%')->get();
+        $jumlah_anggota = Member::count(); // Menghitung jumlah total anggota di database
+
+        return view('members.search', compact('data_anggota', 'jumlah_anggota', 'search'));
     }
 
     /**
