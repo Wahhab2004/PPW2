@@ -28,7 +28,7 @@ class LoginRegisterController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'level' => 'public',
+            'level' => 'public', // bisa diubah sesuai kebutuhan. admin atau public
         ]);
 
         $credentials = $request->only('email', 'password'); // Baris ini mengambil hanya email dan password dari request untuk digunakan sebagai kredensial saat mencoba untuk login. Fungsi only memastikan bahwa hanya data yang diperlukan yang diambil, yang membantu mencegah kebocoran data sensitif.
