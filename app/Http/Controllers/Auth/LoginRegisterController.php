@@ -27,7 +27,8 @@ class LoginRegisterController extends Controller
         User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
+            'level' => 'public',
         ]);
 
         $credentials = $request->only('email', 'password'); // Baris ini mengambil hanya email dan password dari request untuk digunakan sebagai kredensial saat mencoba untuk login. Fungsi only memastikan bahwa hanya data yang diperlukan yang diambil, yang membantu mencegah kebocoran data sensitif.
@@ -54,7 +55,7 @@ class LoginRegisterController extends Controller
     {
         $credentials = $request->validate([
             'email' => 'required|email',
-            'password' => 'required'
+            'password' => 'required',
         ]);
 
         if (Auth::attempt($credentials)) {
@@ -77,6 +78,6 @@ class LoginRegisterController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->route('login')->withSuccess('You have logged out successfully!');;
+        return redirect()->route('login')->withSuccess('You have logged out successfully!');
     }
 }

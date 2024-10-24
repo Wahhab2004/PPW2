@@ -9,6 +9,8 @@ use App\Http\Controllers\Auth\LoginRegisterController;
 use App\Http\Controllers\SendEmailController;
 
 use App\Http\Middleware\CustomAuthRedirect;
+use App\Http\Middleware\CheckAge;
+use App\Http\Middleware\Admin;
 
 Route::get('/', function () {
     return view('welcome');
@@ -26,7 +28,7 @@ Route::controller(LoginRegisterController::class)->middleware('guest')->group(fu
 // Dibuat dengan php artisan make:middleware CustomAuthRedirect
 // Alasan memakai middleware custom karena page login tidak menerima session message di percobaan saya
 // Middleware CustomAuthRedirect memastikan bahwa 'HANYA PENGGUNA YANG SUDAH LOGIN' yang dapat mengakses rute atau aksi tertentu.
-Route::middleware([CustomAuthRedirect::class])->group(function () {
+Route::middleware([CustomAuthRedirect::class, Admin::class])->group(function () {
     Route::get('/dashboard', [LoginRegisterController::class, 'dashboard'])->name('dashboard');
     Route::post('/logout', [LoginRegisterController::class, 'logout'])->name('logout');
 
@@ -64,3 +66,7 @@ Route::middleware([CustomAuthRedirect::class])->group(function () {
 
 Route::get('/send-email', [SendEmailController::class, 'index'])->name('send.email');
 Route::post('/post-email', [SendEmailController::class, 'store'])->name('post.email');
+
+Route::get('restricted', function () {
+    return redirect()->route('dashboard')->withSuccess('Anda berusia lebih dari 18 tahun!');
+})->middleware(CheckAge::class);
