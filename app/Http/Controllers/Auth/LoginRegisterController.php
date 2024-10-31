@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -21,15 +22,39 @@ class LoginRegisterController extends Controller
         $request->validate([
             'name' => 'required|string|max:250',
             'email' => 'required|email|max:250|unique:users',
-            'password' => 'required|min:8|confirmed'
+            'password' => 'required|min:8|confirmed',
+            'photo' => 'image|nullable|max:1999'
         ]);
+
+        // $filenameWithExt = $request->file('photo')->getClientOriginalPath();
+        // $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+        // $extension = $request->file('photo')->getClientOriginalExtension();
+        // $filenameSimpan = $filename . '_' . time() . '.' . $extension;
+        // $path = $request->file('photo')->storeAs('photos', $filenameSimpan);
+
+
+        if ($request->hasFile('photo')) {
+            // Membuat agar nama gambar tidak sama
+          $filenameWithExt = $request->file('photo')->getClientOriginalPath();
+          $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+          $extension = $request->file('photo')->getClientOriginalExtension();
+          $filenameSimpan = $filename . '_' . time() . '.' . $extension;
+          $path = $request->file('photo')->storeAs('photos', $filenameSimpan);
+        }
+
+         else {
+          // tidak ada file yang diupload
+        } 
 
         User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'photo' => $path,
             'level' => 'public', // bisa diubah sesuai kebutuhan. admin atau public
         ]);
+     
+    
 
         $credentials = $request->only('email', 'password'); // Baris ini mengambil hanya email dan password dari request untuk digunakan sebagai kredensial saat mencoba untuk login. Fungsi only memastikan bahwa hanya data yang diperlukan yang diambil, yang membantu mencegah kebocoran data sensitif.
         Auth::attempt($credentials); // Fungsi ini mencoba untuk melakukan login dengan menggunakan kredensial yang telah disiapkan. Jika login berhasil, sesi pengguna akan dimulai, dan pengguna akan dianggap terautentikasi.

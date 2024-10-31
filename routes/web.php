@@ -7,7 +7,7 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\BorrowerController;
 use App\Http\Controllers\Auth\LoginRegisterController;
 use App\Http\Controllers\SendEmailController;
-
+use App\Http\Controllers\UserController;
 use App\Http\Middleware\CustomAuthRedirect;
 use App\Http\Middleware\CheckAge;
 use App\Http\Middleware\Admin;
@@ -70,3 +70,7 @@ Route::post('/post-email', [SendEmailController::class, 'store'])->name('post.em
 Route::get('restricted', function () {
     return redirect()->route('dashboard')->withSuccess('Anda berusia lebih dari 18 tahun!');
 })->middleware(CheckAge::class);
+
+
+// Route user
+Route::resource('users', UserController::class);
