@@ -12,8 +12,7 @@ class UserController extends Controller
     public function index() {
         if(!Auth::check()) {
             return redirect() -> route('login')->withErrors(
-                ['email' => 'Please login to access the dashboard.',
-                ]
+                ['email' => 'Please login to access the users.',]
             )->onlyInput('email');
         }
         $users = User::get();
@@ -39,7 +38,7 @@ class UserController extends Controller
             // Hapus user dari database
             $user->delete();
     
-            return redirect('users')->with('success', 'Berhasil hapus data');
+            return redirect('users')->with('success', 'Berhasil hapus  oi');
         } catch (\Throwable $th) {
             return redirect('users')->with('error', 'Gagal hapus data');
         }
@@ -95,8 +94,8 @@ class UserController extends Controller
 
     public function show($id)
     {
-    $user = User::findOrFail($id);
-    return view('users.show', compact('user'));
+        $user = User::findOrFail($id);
+        return view('users.show', compact('user'));
     }
 
 }
