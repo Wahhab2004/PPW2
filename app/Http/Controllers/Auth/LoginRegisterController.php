@@ -26,34 +26,32 @@ class LoginRegisterController extends Controller
             'photo' => 'image|nullable|max:1999'
         ]);
 
-        // $filenameWithExt = $request->file('photo')->getClientOriginalPath();
-        // $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-        // $extension = $request->file('photo')->getClientOriginalExtension();
-        // $filenameSimpan = $filename . '_' . time() . '.' . $extension;
-        // $path = $request->file('photo')->storeAs('photos', $filenameSimpan);
-
+        
+    
 
         if ($request->hasFile('photo')) {
             // Membuat agar nama gambar tidak sama
-          $filenameWithExt = $request->file('photo')->getClientOriginalPath();
-          $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-          $extension = $request->file('photo')->getClientOriginalExtension();
-          $filenameSimpan = $filename . '_' . time() . '.' . $extension;
-          $path = $request->file('photo')->storeAs('photos', $filenameSimpan);
+            $filenameWithExt = $request->file('photo')->getClientOriginalPath();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('photo')->getClientOriginalExtension();
+            $filenameSimpan = $filename . '_' . time() . '.' . $extension;
+            $path = $request->file('photo')->storeAs('photos', $filenameSimpan);
+
+            User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'photo' =>$path,
+                'level' => 'public', // bisa diubah sesuai kebutuhan. admin atau public
+            ]);
+         
         }
 
          else {
           // tidak ada file yang diupload
         } 
 
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'photo' => $path,
-            'level' => 'public', // bisa diubah sesuai kebutuhan. admin atau public
-        ]);
-     
+       
     
 
         $credentials = $request->only('email', 'password'); // Baris ini mengambil hanya email dan password dari request untuk digunakan sebagai kredensial saat mencoba untuk login. Fungsi only memastikan bahwa hanya data yang diperlukan yang diambil, yang membantu mencegah kebocoran data sensitif.

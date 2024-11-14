@@ -12,6 +12,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Middleware\CustomAuthRedirect;
 use App\Http\Middleware\CheckAge;
 use App\Http\Middleware\Admin;
+use App\Mail\SendEmail;
 
 Route::get('/', function () {
     return view('welcome');
@@ -65,8 +66,10 @@ Route::middleware([CustomAuthRedirect::class, Admin::class])->group(function () 
     Route::get('/borrowers/search', [BorrowerController::class, 'search'])->name('borrowers.search');
 });
 
-Route::get('/send-email', [SendEmailController::class, 'index'])->name('send.email');
+// Route::get('/send-email', [SendEmailController::class, 'index'])->name('send.email');
 Route::post('/post-email', [SendEmailController::class, 'store'])->name('post.email');
+Route::get('/send-email', [SendEmailController::class, 'index'])->name('send.email');
+
 
 Route::get('restricted', function () {
     return redirect()->route('dashboard')->withSuccess('Anda berusia lebih dari 18 tahun!');

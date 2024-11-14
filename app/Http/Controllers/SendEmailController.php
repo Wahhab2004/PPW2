@@ -11,6 +11,15 @@ class SendEmailController extends Controller
 {
     public function index()
     {
+
+        // $content = [
+        //     'name' => 'Ini Nama Pengirim',
+        //     'subject' => 'Ini subject email',
+        //     'body' => 'Ini adalah isi email yang dikirim dari laravel 10'
+        // ];
+
+        // Mail::to('wahhabawaludin2004@mail.ugm.ac.id')->send(new SendEmail($content));
+
         return view('emails.sendEmail');
     }
     public function store(Request $request)
