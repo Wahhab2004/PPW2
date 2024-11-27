@@ -14,6 +14,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Middleware\CustomAuthRedirect;
 use App\Http\Middleware\CheckAge;
 use App\Http\Middleware\Admin;
+use App\Models\GalleryLeana;
 
 Route::get('/', function () {
     return view('welcome');
@@ -80,9 +81,10 @@ Route::resource('users', UserController::class);
 
 // Route Gallery
 Route::resource('gallery', GalleryController::class);
+// Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index');
 
 // // Route API
 // Route::get('/info', [InfoController::class, 'index'])->name('info');
 
 // // Route Geet
-// Route::get('/greet', [GreetController::class, 'greet'])->name('greet');
+Route::get('/greet', [GreetController::class, 'greet'])->name('greet');

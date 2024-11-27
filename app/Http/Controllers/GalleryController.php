@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use OpenApi\Annotations as OA;
 
 class GalleryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
+
     public function index()
     {
         $data = array(
@@ -18,6 +18,56 @@ class GalleryController extends Controller
             'galleries' => Post::where('picture', '!=', '')->whereNotNull('picture')->orderBy('created_at', 'desc')->paginate(30)
         );
         return view('gallery.index')->with($data);
+    }
+
+     /**
+      * @OA\Get(
+      *     path="/api/gallery",
+      *     tags={"Gallery"},
+      *     summary="Retrieve all gallery items",
+      *     description="Get a list of all galleries stored in the database",
+      *     @OA\Response(
+      *         response=200,
+      *         description="A list of gallery items",
+      *         @OA\JsonContent(
+      *             type="object",
+      *             @OA\Property(property="message", type="string", example="Berhasil mengambil data gallery"),
+      *             @OA\Property(property="success", type="boolean", example=true),
+      *             @OA\Property(
+      *                 property="data",
+      *                 type="array",
+      *                 @OA\Items(
+      *                     type="object",
+      *                     @OA\Property(property="id", type="integer", example=1),
+      *                     @OA\Property(property="title", type="string", example="Gambar 1"),
+      *                     @OA\Property(property="description", type="string", example="Ini adalah gambar pertama."),
+      *                     @OA\Property(property="picture", type="string", example="images/gallery1.jpg"),
+      *                     @OA\Property(property="created_at", type="string", format="date-time", example="2024-11-04T12:00:00Z"),
+      *                     @OA\Property(property="updated_at", type="string", format="date-time", example="2024-11-04T12:30:00Z")
+      *                 )
+      *             )
+      *         )
+      *     )
+      * )
+      */
+     
+
+
+    public function indexAPI()
+    {
+      
+        // Ambil semua data gallery dari database
+        $galleries = Post::all();
+
+        // Return data dalam format JSON
+        return response()->json([
+            'message' => 'Berhasil mengambil data gallery',
+            'success' => true,
+            'data' => $galleries
+        ]);
+
+
+
     }
 
     /**
@@ -48,9 +98,9 @@ class GalleryController extends Controller
             $smallFilename = "small {$basename}.{$extension}";
             $mediumFilename = "medium {$basename}.{$extension}";
             $largeFilename = "large {$basename}.{$extension}";
-            $filenameSimpan = "$basename}.{$extension}";
+            $filenameSimpan = "$basename.{$extension}";
 
-            $path = $request->file('picture')->storeAs('post_image', $filenameSimpan);
+            $path = $request->file('picture')->storeAs('posts_image', $filenameSimpan);
         }
         else {
             $filenameSimpan = 'noimage.png';
