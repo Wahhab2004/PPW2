@@ -7,6 +7,8 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\BorrowerController;
 use App\Http\Controllers\Auth\LoginRegisterController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\GreetController;
+use App\Http\Controllers\InfoController;
 use App\Http\Controllers\SendEmailController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\CustomAuthRedirect;
@@ -78,3 +80,9 @@ Route::resource('users', UserController::class);
 
 // Route Gallery
 Route::resource('gallery', GalleryController::class);
+
+// // Route API
+// Route::get('/info', [InfoController::class, 'index'])->name('info');
+
+// // Route Geet
+// Route::get('/greet', [GreetController::class, 'greet'])->name('greet');
